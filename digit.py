@@ -1,18 +1,24 @@
 import curses
 import random
 import time
+import sys
 from curses import wrapper
 
 
 def main(stdscr):
     curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
 
-    key = start_screen(stdscr)
-    match key:
-        case "1":
+    while True:
+        key = start_screen(stdscr)
+
+        if key == "1":
             forward_dgs(stdscr)
-        case "2":
+        elif key == "2":
             reverse_dgs(stdscr)
+        elif ord(key) == 27:
+            break
+        else:
+            continue
 
 
 def start_screen(stdscr):
@@ -46,19 +52,15 @@ def forward_dgs(stdscr):
         )
         stdscr.refresh()
 
-        key = stdscr.getkey()
-        user_input.append(key)
-        stdscr.addstr(key)
-        stdscr.refresh()
-
-        # TODO: fix how user_input is displayed and handle backspace better
-        while key not in (chr(13), "\n"):
+        while True:
             key = stdscr.getkey()
             if key in ("KEY_BACKSPACE", "\b", "\xf7"):
                 if len(user_input) > 0:
                     user_input.pop()
             elif ord(key) == 27:
-                ...
+                sys.exit()
+            elif key in (chr(13), "\n"):
+                break
             else:
                 user_input.append(key)
 
@@ -86,7 +88,6 @@ def forward_dgs(stdscr):
             break
 
 
-# TODO: implement function
 def reverse_dgs(stdscr):
     i: int = 0
 
@@ -107,19 +108,15 @@ def reverse_dgs(stdscr):
         )
         stdscr.refresh()
 
-        key = stdscr.getkey()
-        user_input.append(key)
-        stdscr.addstr(key)
-        stdscr.refresh()
-
-        # TODO: fix how user_input is displayed and handle backspace better
-        while key not in (chr(13), "\n"):
+        while True:
             key = stdscr.getkey()
             if key in ("KEY_BACKSPACE", "\b", "\xf7"):
                 if len(user_input) > 0:
                     user_input.pop()
             elif ord(key) == 27:
-                ...
+                sys.exit()
+            elif key in (chr(13), "\n"):
+                break
             else:
                 user_input.append(key)
 
