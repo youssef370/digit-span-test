@@ -144,5 +144,9 @@ def reverse_dgs(stdscr):
             break
 
 
+def validate_key(key):
+    ...
+
+
 if __name__ == "__main__":
     wrapper(main)
